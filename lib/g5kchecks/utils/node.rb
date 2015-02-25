@@ -16,11 +16,19 @@ module Grid5000
     def initialize(conf)
       @conf = conf
       @hostname = Socket.gethostname
-      @node_uid, @site_uid, @grid_uid, @ltd = hostname.split(".")
-      @cluster_uid = @node_uid.split("-")[0]
       @ohai_description = nil
       @api_description = nil
       @max_retries = 2
+      get_openstack_vendor_data
+    end
+
+    def get_openstack_vendor_data
+      openstack_vendor_data = JSON.parse RestClient.get("http://169.254.169.254/openstack/latest/vendor_data.json", :accept => :json)
+      @node_uid = openstack_vendor_data["node"]
+      @cluster_uid = openstack_vendor_data["cluster"]
+      @site_uid = openstack_vendor_data["site"]
+      @grid_uid = openstack_vendor_data["grid"]
+      @ltd = "org"
     end
 
     def api_description
