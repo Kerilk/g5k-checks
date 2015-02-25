@@ -57,14 +57,17 @@ describe "Network" do
     end
 
     it "should have the correct Rate" do
-      rate_api = ""
-      rate_api = @api[dev[0]]['rate'] if @api_desc
-      if dev[1][:rate] == ""
-        rate_ohai = dev[1][:rate]
-      else
-        rate_ohai = dev[1][:rate].to_i
+      mnt_api = @api[dev[0]]['mounted'] if @api_desc
+      if mnt_api
+        rate_api = ""
+        rate_api = @api[dev[0]]['rate'] if @api_desc
+        if dev[1][:rate] == ""
+          rate_ohai = dev[1][:rate]
+        else
+          rate_ohai = dev[1][:rate].to_i
+        end
+        rate_ohai.should eql(rate_api), "#{rate_ohai}, #{rate_api}, network_interfaces, #{dev[0]}, rate"
       end
-      rate_ohai.should eql(rate_api), "#{rate_ohai}, #{rate_api}, network_interfaces, #{dev[0]}, rate"
     end
 
     it "should have the correct version" do
