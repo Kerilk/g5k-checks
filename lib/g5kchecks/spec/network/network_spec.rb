@@ -74,12 +74,12 @@ describe "Network" do
       ver_ohai.should eql(ver_api), "#{ver_ohai}, #{ver_api}, network_interfaces, #{dev[0]}, version"
     end
 
-    it "should have the correct vendor" do
-      ven_api = ""
-      ven_api = @api[dev[0]]['vendor'] if @api_desc
-      ven_ohai = dev[1][:vendor]
-      ven_ohai.should eql(ven_api), "#{ven_ohai}, #{ven_api}, network_interfaces, #{dev[0]}, vendor"
-    end
+    #it "should have the correct vendor" do
+      #ven_api = ""
+      #ven_api = @api[dev[0]]['vendor'] if @api_desc
+      #ven_ohai = dev[1][:vendor]
+      #ven_ohai.should eql(ven_api), "#{ven_ohai}, #{ven_api}, network_interfaces, #{dev[0]}, vendor"
+    #end
 
 #    it "should have the correct enabled mode" do
 #      ven_api = nil
