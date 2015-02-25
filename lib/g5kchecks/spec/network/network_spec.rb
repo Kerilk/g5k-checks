@@ -19,19 +19,19 @@ describe "Network" do
       name_ohai.should eql(name_api), "#{name_ohai}, #{name_api}, network_interfaces, #{dev[0]}, interface"
     end
 
-    it "should have the correct IPv4" do
-      ip_api = ""
-      ip_api = @api[dev[0]]['ip'] if @api_desc
-      ip_ohai = dev[1][:ip]
-      ip_ohai.should eql(ip_api), "#{ip_ohai}, #{ip_api}, network_interfaces, #{dev[0]}, ip"
-    end
+    #it "should have the correct IPv4" do
+      #ip_api = ""
+      #ip_api = @api[dev[0]]['ip'] if @api_desc
+      #ip_ohai = dev[1][:ip]
+      #ip_ohai.should eql(ip_api), "#{ip_ohai}, #{ip_api}, network_interfaces, #{dev[0]}, ip"
+    #end
 
-    it "should have the correct IPv6" do
-      ip_api = ""
-      ip_api = @api[dev[0]]['ip6'] if @api_desc
-      ip_ohai = dev[1][:ip6]
-      ip_ohai.should eql(ip_api), "#{ip_ohai}, #{ip_api}, network_interfaces, #{dev[0]}, ip6"
-    end
+    #it "should have the correct IPv6" do
+      #ip_api = ""
+      #ip_api = @api[dev[0]]['ip6'] if @api_desc
+      #ip_ohai = dev[1][:ip6]
+      #ip_ohai.should eql(ip_api), "#{ip_ohai}, #{ip_api}, network_interfaces, #{dev[0]}, ip6"
+    #end
 
     it "should have the correct Driver" do
       driver_api = ""
