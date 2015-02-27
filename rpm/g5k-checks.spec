@@ -14,6 +14,10 @@ URL: https://github.com/grid5000/g5k-checks
 Source0: %{gemname}-%{version}.gem
 Requires: ruby(release)
 Requires: ruby(rubygems)
+Requires: rubygem(ohai)
+Requires: rubygem(popen4)
+Requires: rubygem(rest-client)
+Requires: rubygem(rspec)
 BuildRequires: ruby(release)
 BuildRequires: ruby(rubygems)
 BuildRequires: ruby
