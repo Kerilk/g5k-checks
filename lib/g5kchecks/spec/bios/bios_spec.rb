@@ -2,7 +2,7 @@ describe "Bios" do
 
   before(:all) do
     @api = RSpec.configuration.node.api_description["bios"]
-    @system = RSpec.configuration.node.ohai_description.dmi["bios"]
+    @system = RSpec.configuration.node.ohai_description["dmi"]["bios"]
   end
 
   it "should have the correct vendor" do
