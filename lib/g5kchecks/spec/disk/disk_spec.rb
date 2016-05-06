@@ -10,7 +10,7 @@ describe "Disk" do
     end
   end
 
-  RSpec.configuration.node.ohai_description.block_device.select { |key,value| key =~ /[sh]d.*/ and value["model"] != "vmDisk" }.each { |k,v|
+  RSpec.configuration.node.ohai_description["block_device"].select { |key,value| key =~ /[sh]d.*/ and value["model"] != "vmDisk" }.each { |k,v|
 
     it "should have the correct name" do
       name_api = @api[k] if @api
