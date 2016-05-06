@@ -1,5 +1,5 @@
 
-Ohai.plugin(:CPU) do
+Ohai.plugin(:CpuImproved) do
   provides "cpu/improve"
   depends "cpu"
 
