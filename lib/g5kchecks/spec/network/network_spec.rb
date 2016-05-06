@@ -35,7 +35,8 @@ describe "Network" do
 
     it "should be the correct interface name" do
       name_api = ""
-      name_api = @api[dev[0]]['interface'] if @api_desc
+      corrected_dev_0 = correct_nic_name_second(dev[0])
+      name_api = @api[corrected_dev_0]['interface'] if @api_desc
       name_ohai = Utils.interface_name(dev[1][:type])
       name_ohai.should eql(name_api), "#{name_ohai}, #{name_api}, network_interfaces, #{dev[0]}, interface"
     end
@@ -56,7 +57,8 @@ describe "Network" do
 
     it "should have the correct Driver" do
       driver_api = ""
-      driver_api = @api[dev[0]]['driver'] if @api_desc      
+      corrected_dev_0 = correct_nic_name_second(dev[0])
+      driver_api = @api[corrected_dev_0]['driver'] if @api_desc      
       driver_ohai = dev[1][:driver]
       driver_ohai.should eql(driver_api), "#{driver_ohai}, #{driver_api}, network_interfaces, #{dev[0]}, driver"
     end
@@ -71,17 +73,19 @@ describe "Network" do
     else
       it "should have the correct Mac Address" do
         mac_api = ""
-        mac_api = @api[dev[0]]['mac'] if @api_desc
+        corrected_dev_0 = correct_nic_name_second(dev[0])
+        mac_api = @api[corrected_dev_0]['mac'] if @api_desc
         mac_ohai = dev[1][:mac].downcase
         mac_ohai.should eql(mac_api), "#{mac_ohai}, #{mac_api}, network_interfaces, #{dev[0]}, mac"
       end
     end
 
     it "should have the correct Rate" do
-      mnt_api = @api[dev[0]]['mounted'] if @api_desc
+      corrected_dev_0 = correct_nic_name_second(dev[0])
+      mnt_api = @api[corrected_dev_0]['mounted'] if @api_desc
       if mnt_api
         rate_api = ""
-        rate_api = @api[dev[0]]['rate'] if @api_desc
+        rate_api = @api[corrected_dev_0]['rate'] if @api_desc
         if dev[1][:rate] == ""
           rate_ohai = dev[1][:rate]
         else
@@ -93,7 +97,8 @@ describe "Network" do
 
     it "should have the correct version" do
       ver_api = ""
-      ver_api = @api[dev[0]]['version'] if @api_desc
+      corrected_dev_0 = correct_nic_name_second(dev[0])
+      ver_api = @api[corrected_dev_0]['version'] if @api_desc
       ver_ohai = dev[1][:version]
       ver_ohai.should eql(ver_api), "#{ver_ohai}, #{ver_api}, network_interfaces, #{dev[0]}, version"
     end
@@ -121,14 +126,16 @@ describe "Network" do
 
     it "should have the correct mounted mode" do
       ven_api = nil
-      ven_api = @api[dev[0]]['mounted'] if @api_desc
+      corrected_dev_0 = correct_nic_name_second(dev[0])
+      ven_api = @api[corrected_dev_0]['mounted'] if @api_desc
       ven_ohai = dev[1][:mounted]
       ven_ohai.should eql(ven_api), "#{ven_ohai}, #{ven_api}, network_interfaces, #{dev[0]}, mounted"
     end
 
     it "should not be a management card" do
       mgt_api = nil
-      mgt_api = @api[dev[0]]['management'] if @api_desc
+      corrected_dev_0 = correct_nic_name_second(dev[0])
+      mgt_api = @api[corrected_dev_0]['management'] if @api_desc
       mgt_ohai = dev[1][:management]
       mgt_ohai.should eql(mgt_api), "#{mgt_ohai}, #{mgt_api}, network_interfaces, #{dev[0]}, management"
     end
