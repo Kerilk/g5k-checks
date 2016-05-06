@@ -1,8 +1,9 @@
+# coding: utf-8
 describe "Chassis" do
 
   before(:all) do
     @api = RSpec.configuration.node.api_description["chassis"]
-    @system = RSpec.configuration.node.ohai_description.dmi["system"]
+    @system = RSpec.configuration.node.ohai_description["dmi"]["system"]
   end
 
   it "should have the correct serial number" do
