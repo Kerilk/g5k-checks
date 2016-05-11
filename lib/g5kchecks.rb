@@ -1,6 +1,7 @@
 #!/usr/bin/ruby
 
 require 'rspec'
+require 'rspec/legacy_formatters'
 
 require 'g5kchecks/utils/node'
 require 'g5kchecks/utils/utils'

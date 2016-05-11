@@ -13,6 +13,7 @@ describe "Architecture" do
     else
       core_ohai = @system[:cpu][:real].to_i
     end
+    RSpec.configuration.expect_with(:rspec) { |c| c.syntax = :should }
     core_ohai.should eql(core_api), "#{core_ohai}, #{core_api}, architecture, smp_size"
   end
 

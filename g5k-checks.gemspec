@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('popen4')
   s.add_runtime_dependency('rest-client')
   s.add_runtime_dependency('rspec', '~> 3') # rspec 3 requires formatter changes
+  s.add_runtime_dependency('rspec-legacy_formatters')
 
   s.add_development_dependency('rake')
 end
