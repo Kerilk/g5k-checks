@@ -22,14 +22,18 @@ module RSpec
         def stop
           super
           @output_hash[:examples] = examples.each do |example|
+            print(example)
             if e=example.exception
               array = e.message.split(', ')
               if array.size > 1
-                value = array.delete_at(0)
-                next if value == ""
-                # on enlève la valeur de l'api qui doit être nulle
-                array.delete_at(0)
-                add_to_yaml_hash(array,value,@yaml_hash)
+                index_empty_position = array.index("")
+                value_str = array.slice(0, index_empty_position).join(" ")
+                path = array.slice(index_empty_position + 1, array.length)
+                if path[0] == ""
+                  # Remove an empty string from the path
+                  path.delete_at(0)
+                end
+                add_to_yaml_hash(path, value_str, @yaml_hash)
               end
             end
           end
