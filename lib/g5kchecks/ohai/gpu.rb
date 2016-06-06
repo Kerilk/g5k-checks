@@ -94,7 +94,6 @@ if File.exist?(nvidia_file_name)
       key = get_matching_rule(line)
       if not key.nil?
         simplified_key = @labels_map[key]
-        puts(simplified_key)
         value = extract_value(line, key)
         gpu_description = gpuinfo[:gpus][gpu_name]
         gpu_description[simplified_key] = value
