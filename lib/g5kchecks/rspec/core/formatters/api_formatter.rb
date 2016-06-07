@@ -22,18 +22,22 @@ module RSpec
         def stop
           super
           @output_hash[:examples] = examples.each do |example|
-            print(example)
             if e=example.exception
               array = e.message.split(', ')
               if array.size > 1
                 index_empty_position = array.index("")
-                value_str = array.slice(0, index_empty_position).join(" ")
-                path = array.slice(index_empty_position + 1, array.length)
-                if path[0] == ""
-                  # Remove an empty string from the path
-                  path.delete_at(0)
+                if index_empty_position.nil?
+                  index_empty_position = array.index("0")
                 end
-                add_to_yaml_hash(path, value_str, @yaml_hash)
+                if not index_empty_position.nil?
+                  value_str = array.slice(0, index_empty_position).join(" ")
+                  path = array.slice(index_empty_position + 1, array.length)
+                  if path[0] == ""
+                    # Remove an empty string from the path
+                    path.delete_at(0)
+                  end
+                  add_to_yaml_hash(path, value_str, @yaml_hash)
+                end
               end
             end
           end
