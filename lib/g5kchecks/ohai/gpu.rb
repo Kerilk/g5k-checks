@@ -74,7 +74,10 @@ def extract_value line, property
   end
 end
 
+# The <nvidia_file_name> variables is a link to a file containing the
+# output of the "deviceQuery" sample, provided by the CUDA framework.
 nvidia_file_name = "/opt/nvidia.txt"
+
 if File.exist?(nvidia_file_name)
   file_nvidia = File.open(nvidia_file_name)
   file_nvidia_content = file_nvidia.read
