@@ -12,6 +12,16 @@ describe "Network" do
 
   RSpec.configuration.node.ohai_description[:network][:interfaces].to_hash.select { |d,i| %w{ eno eth ib myri }.include?(i[:type]) }.each do |dev|
 
+    # WARNING: Infiniband  cards are  not yet  supported by  cc-checks :  We are
+    # skipping the  tests until their support  is added. We make  the assumption
+    # that infinibands interfaces follows the "ib" pattern
+    if dev[0][/^ib/]
+      puts "/!\\ The #{dev[0]} interface has  not been checked: Infiniband cards are not yet fully supported by cc-checks"
+      is_infiniband = true
+    else
+      is_infiniband = false
+    end
+
     it "should be the correct interface name" do
       name_api = ""
       name_api = @api[dev[0]]['interface'] if @api_desc
@@ -34,6 +44,11 @@ describe "Network" do
     #end
 
     it "should have the correct Driver" do
+      # Warning: Infiniband interfaces  don't support this value  yet: this test
+      # must be skipped
+      if is_infiniband
+        next
+      end
       driver_api = ""
       driver_api = @api[dev[0]]['driver'] if @api_desc
       driver_ohai = dev[1][:driver]
@@ -71,6 +86,11 @@ describe "Network" do
     end
 
     it "should have the correct version" do
+      # Warning: Infiniband interfaces  don't support this value  yet: this test
+      # must be skipped
+      if is_infiniband
+        next
+      end
       ver_api = ""
       ver_api = @api[dev[0]]['version'] if @api_desc
       ver_ohai = dev[1][:version]
@@ -99,6 +119,11 @@ describe "Network" do
 #    end
 
     it "should have the correct mounted mode" do
+      # Warning: Infiniband interfaces  don't support this value  yet: this test
+      # must be skipped
+      if is_infiniband
+        next
+      end
       ven_api = nil
       ven_api = @api[dev[0]]['mounted'] if @api_desc
       ven_ohai = dev[1][:mounted]
