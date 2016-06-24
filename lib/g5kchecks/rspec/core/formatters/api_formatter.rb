@@ -23,7 +23,7 @@ module RSpec
           super
           @output_hash[:examples] = examples.each do |example|
             if e=example.exception
-              array = e.message.split(', ')
+              array = e.message.split("\n")[0].split(', ')
               if array.size > 1
                 index_empty_position = array.index("")
                 if index_empty_position.nil?
@@ -55,7 +55,6 @@ module RSpec
         def add_to_yaml_hash(array, value, hash)
           value = value.encode(Encoding.default_external)
           if array.size == 1
-            # puts array[0]
             tmp = array[0].encode(Encoding.default_external)
             hash[tmp] = Utils.string_to_object(value)
             return hash
