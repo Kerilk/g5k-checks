@@ -2,7 +2,7 @@ provides "gpu"
 
 gpu_output = `lspci | grep 3D`
 #gpu_output = "05:00.0 3D controller: NVIDIA Corporation GK210GL [Tesla K80] (rev a1)\n06:00.0 3D controller: NVIDIA Corporation GK210GL [Tesla K80] (rev a1)\n"
-gpu_output= "03:00.0 3D controller: NVIDIA Corporation Device 17fd (rev a1)"
+#gpu_output = "03:00.0 3D controller: NVIDIA Corporation Device 17fd (rev a1)"
 
 if gpu_output != ''
   gpu_lines = gpu_output.split("\n")
