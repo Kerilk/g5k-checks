@@ -45,5 +45,4 @@ else
   }
 end
 
-puts(gpu_info)
 gpu gpu_info
