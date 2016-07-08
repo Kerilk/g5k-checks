@@ -27,7 +27,7 @@ describe "Gpu" do
       model_api = @api['gpu_model'] if @api
       model_ohai = @system['gpu_model']
       model_ohai.should eql(model_api), "#{model_ohai}, #{model_api}, gpu, gpu_model"
-    end  
+    end
   end
 
   it "should have the correct gpu_vendor" do
