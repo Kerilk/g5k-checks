@@ -43,6 +43,15 @@ describe "Disk" do
       version_ohai.should eql(version_api), "#{version_ohai}, #{version_api}, storage_devices, #{k}, rev"
     end
 
+    it "should use the 'nvme' driver if applicable" do
+      if k.include? "nvme"
+        driver_api = @api[k]['driver'] if @api and @api[k] and @api[k]['driver']
+        # puts "driver_api: #{driver_api}"
+        expected_driver = "nvme"
+        expected_driver.should eql(driver_api), "#{expected_driver}, #{driver_api}, storage_devices, #{k}, nvme"
+      end
+    end
+
     # it "should have the correct vendor" do
     #   puts ("vendor #{v}")
     #   vendor_ohai = v["vendor"]
