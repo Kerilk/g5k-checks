@@ -30,17 +30,17 @@ describe "Network" do
     end
 
     #it "should have the correct IPv4" do
-      #ip_api = ""
-      #ip_api = @api[dev[0]]['ip'] if @api_desc
-      #ip_ohai = dev[1][:ip]
-      #ip_ohai.should eql(ip_api), "#{ip_ohai}, #{ip_api}, network_interfaces, #{dev[0]}, ip"
+    #ip_api = ""
+    #ip_api = @api[dev[0]]['ip'] if @api_desc
+    #ip_ohai = dev[1][:ip]
+    #ip_ohai.should eql(ip_api), "#{ip_ohai}, #{ip_api}, network_interfaces, #{dev[0]}, ip"
     #end
 
     #it "should have the correct IPv6" do
-      #ip_api = ""
-      #ip_api = @api[dev[0]]['ip6'] if @api_desc
-      #ip_ohai = dev[1][:ip6]
-      #ip_ohai.should eql(ip_api), "#{ip_ohai}, #{ip_api}, network_interfaces, #{dev[0]}, ip6"
+    #ip_api = ""
+    #ip_api = @api[dev[0]]['ip6'] if @api_desc
+    #ip_ohai = dev[1][:ip6]
+    #ip_ohai.should eql(ip_api), "#{ip_ohai}, #{ip_api}, network_interfaces, #{dev[0]}, ip6"
     #end
 
     it "should have the correct Driver" do
@@ -57,11 +57,11 @@ describe "Network" do
 
     if dev[0] =~ /ib/
       it "should have the correct guid" do
-      mac_api = ""
-      mac_api = @api[dev[0]]['guid'] if @api_desc
-      mac_ohai = dev[1][:mac]
-      mac_ohai.should eql(mac_api), "#{mac_ohai}, #{mac_api}, network_interfaces, #{dev[0]}, guid"
-    end
+        mac_api = ""
+        mac_api = @api[dev[0]]['guid'] if @api_desc
+        mac_ohai = dev[1][:mac]
+        mac_ohai.should eql(mac_api), "#{mac_ohai}, #{mac_api}, network_interfaces, #{dev[0]}, guid"
+      end
     else
       it "should have the correct Mac Address" do
         mac_api = ""
@@ -98,25 +98,25 @@ describe "Network" do
     end
 
     #it "should have the correct vendor" do
-      #ven_api = ""
-      #ven_api = @api[dev[0]]['vendor'] if @api_desc
-      #ven_ohai = dev[1][:vendor]
-      #ven_ohai.should eql(ven_api), "#{ven_ohai}, #{ven_api}, network_interfaces, #{dev[0]}, vendor"
+    #ven_api = ""
+    #ven_api = @api[dev[0]]['vendor'] if @api_desc
+    #ven_ohai = dev[1][:vendor]
+    #ven_ohai.should eql(ven_api), "#{ven_ohai}, #{ven_api}, network_interfaces, #{dev[0]}, vendor"
     #end
 
-#    it "should have the correct enabled mode" do
-#      ven_api = nil
-#      ven_api = @api[dev[0]]['enabled'] if @api_desc
-#      ven_ohai = dev[1][:enabled]
-#      ven_ohai.should eql(ven_api), "#{ven_ohai}, #{ven_api}, network_interfaces, #{dev[0]}, enabled"
-#    end
+    #    it "should have the correct enabled mode" do
+    #      ven_api = nil
+    #      ven_api = @api[dev[0]]['enabled'] if @api_desc
+    #      ven_ohai = dev[1][:enabled]
+    #      ven_ohai.should eql(ven_api), "#{ven_ohai}, #{ven_api}, network_interfaces, #{dev[0]}, enabled"
+    #    end
 
-#    it "should have the correct mountable mode" do
-#      ven_api = nil
-#      ven_api = @api[dev[0]]['mountable'] if @api_desc
-#      ven_ohai = dev[1][:mountable]
-#      ven_ohai.should eql(ven_api), "#{ven_ohai}, #{ven_api}, network_interfaces, #{dev[0]}, mountable"
-#    end
+    #    it "should have the correct mountable mode" do
+    #      ven_api = nil
+    #      ven_api = @api[dev[0]]['mountable'] if @api_desc
+    #      ven_ohai = dev[1][:mountable]
+    #      ven_ohai.should eql(ven_api), "#{ven_ohai}, #{ven_api}, network_interfaces, #{dev[0]}, mountable"
+    #    end
 
     it "should have the correct mounted mode" do
       # Warning: Infiniband interfaces don't support this value yet: this test

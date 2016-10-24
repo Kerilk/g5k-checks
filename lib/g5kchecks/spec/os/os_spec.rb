@@ -23,7 +23,24 @@ describe "OS" do
     release_api = ""
     release_api = @api['version'] if @api
     release_ohai = @system[:platform_version]
+    release_api = release_api.to_s unless release_api.is_a? String # release_ohai is a string but is saved as a float on the yaml output of g5k-checks (?)
     release_ohai.should eql(release_api), "#{release_ohai}, #{release_api}, operating_system, version"
   end
+
+  [:ht_enabled, 
+   :pstate_driver, :pstate_governor, #, :pstate_max_cpu_speed, :pstate_min_cpu_speed, 
+   :turboboost_enabled, 
+   :cstate_driver, :cstate_governor, :cstate_max_id].each { |key|
+    
+    it "should have the correct value for #{key}" do
+      key_ohai = @system[:cpu][key]
+      
+      key_api = nil
+      key_api = @api[key.to_s] if @api
+      
+      key_ohai.should eq(key_api), "#{key_ohai}, #{key_api}, operating_system, #{key}"
+    end
+  
+  }
 
 end
