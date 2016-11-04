@@ -2,7 +2,7 @@
 %global gem_name g5k-checks
 
 Name: rubygem-%{gem_name}
-Version: 0.5.1
+Version: 0.7.4
 Release: 1%{?dist}
 Summary: Hardware verification tool for Grid'5000
 Group: Development/Languages
@@ -75,11 +75,13 @@ popd
 %{gem_instdir}/scripts
 %{gem_libdir}
 %doc %{gem_docdir}
-%doc %{gem_instdir}/Licence.txt
+%doc %{gem_instdir}/LICENSE
 %doc %{gem_instdir}/VERSION
 %exclude %{gem_cache}
 %{gem_spec}
 
 %changelog
+* Fri Nov 04 2016 Jonathan Pastor <jpastor@uchicago.edu> - 0.7.4
+- Merge with g5k upstream
 * Wed Mar 16 2016 Pierre Riteau <priteau@uchicago.edu> - 0.5.1-1
 - Initial package
