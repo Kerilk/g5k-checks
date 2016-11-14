@@ -33,10 +33,6 @@ GEM_FILE_NAME=$(echo $GEM_BUILD_OUTPUT | grep -o -E "[a-z.A-Z0-9-]+\.gem")
 echo $GEM_FILE_NAME
 cp $GEM_FILE_NAME $BUILD_FOLDER/SOURCES/.
 
-# # Generate a new spec file
-# yum install -y rubygem-gem2rpm
-# gem2rpm $GEM_FILE_NAME > $BUILD_FOLDER/SPECS/g5k-checks.spec
-
 # (Generate and) copy the gemspec file in the temporary rpmbuild folder
 cp rpmbuild/SPECS/g5k-checks.spec $BUILD_FOLDER/SPECS/g5k-checks.spec
 
@@ -44,8 +40,6 @@ cp rpmbuild/SPECS/g5k-checks.spec $BUILD_FOLDER/SPECS/g5k-checks.spec
 ############################################################
 # Generating the RPM package
 ############################################################
-# mkdir -p /home/cc/rpmbuild/SOURCES
-# cp g5k-checks/g5k-checks-0.5.1.gem /home/cc/rpmbuild/SOURCES/.
 pushd $BUILD_FOLDER
 rpmbuild -ba $BUILD_FOLDER/SPECS/g5k-checks.spec
 popd
