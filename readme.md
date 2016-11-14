@@ -1,3 +1,7 @@
+## Build RPM package
+
+  $ bash build_script/build_rpm.sh
+
 ## Build Debian package
 
 ### Build docker image
