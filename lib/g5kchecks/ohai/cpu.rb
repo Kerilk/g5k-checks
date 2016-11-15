@@ -13,7 +13,7 @@ end
 # Execute an external program
 def execute(cmd)
   stdout, stderr, status = Open3.capture3(cmd)
-  
+
   raise "#{cmd}: #{status.exitstatus}" unless status.success?
 
   stdout = stdout.split("\n")
@@ -121,38 +121,37 @@ cpu[:cstate_governor] = fileread('/sys/devices/system/cpu/cpuidle/current_govern
 
 if cpu[:cstate_driver] != 'none'
   cstate_names = execute('cat /sys/devices/system/cpu/cpu0/cpuidle/state*/name') rescue nil
-  
-  # Attempt to force CPU to enter or leave idle state (it updates /sys/devices/system/cpu/cpu*/cpuidle/state*/)
+  cstate_ids = cstate_names.select &lambda {|k| k.include?("-HSW")}
+  cstate_ids_as_int = cstate_ids.map &lambda {|k| k.scan(/[0-9]+/)[0].to_i}
 
-  # convert to array of int
-  a = execute("cat /sys/devices/system/cpu/cpu*/cpuidle/state*/usage").map!{|x| x.to_i}
-  execute("stress -t 1 -c #{cpu[:nb_threads]}") rescue nil
-  sleep 1
-  b = execute("cat /sys/devices/system/cpu/cpu*/cpuidle/state*/usage").map!{|x| x.to_i}
-  # b-a elements by elements and also group by cpu_id
-  diff = [b, a].transpose.map {|v| v.reduce(:-)}.each_slice(cstate_names.size).to_a
-  # sum states of all the cpus
-  diff = diff.transpose.map{|v| v.reduce(:+)}
-
-  # deeper cstate ?
-  cpu[:cstate_max_id] = diff.size - diff.reverse.index { |x| x != 0 } - 1
+  cpu[:cstate_max_id] = cstate_ids_as_int.max
+  cpu[:cstate_enabled] = true
+  cpu[:cstate_c1e] = cstate_ids_as_int.include?(1)
 end
 
-# bios configuration (using sysctl)
+# # bios configuration (using syscfg)
+# syscfg_list = {
+#   :ht_enabled => 'LogicalProc',
+#   :turboboost_enabled => 'ProcTurboMode',
+#   :cstate_c1e => 'ProcC1E',
+#   :cstate_enabled => 'ProcCStates',
+# }
 
-syscfg_list = { 
-  :ht_enabled => 'LogicalProc',
-  :turboboost_enabled => 'ProcTurboMode',
-  :cstate_c1e => 'ProcC1E',
-  :cstate_enabled => 'ProcCStates',
-}
+# execute('/opt/dell/toolkit/bin/syscfg -o /tmp/syscfg-bios.conf') rescue []
+# syscfg = File.read('/tmp/syscfg-bios.conf') rescue ''
 
-execute('/opt/dell/toolkit/bin/syscfg -o /tmp/syscfg-bios.conf') rescue []
-syscfg = File.read('/tmp/syscfg-bios.conf') rescue ''
+# cpu['configuration'] ||= {}
+# syscfg_list.each {|k,v|
+#   cpu['configuration'][k] = (syscfg.match(/^[;]?#{v}=(.*)/)[1] == 'enable' rescue nil)
+# }
 
-cpu['configuration'] ||= {}
-syscfg_list.each {|k,v|
-  cpu['configuration'][k] = (syscfg.match(/^[;]?#{v}=(.*)/)[1] == 'enable' rescue nil)
+# I took inspiration from this document which describes how DELL's syscfg is working:
+# http://topics-cdn.dell.com/pdf/dell-opnmang-dplymnt-toolkit-v5.0.1_Reference%20Guide_en-us.pdf
+cpu['configuration'] = {
+  :ht_enabled => cpu[:ht_enabled],
+  :turboboost_enabled => cpu[:turboboost_enabled],
+  :cstate_enabled => cpu[:cstate_enabled],
+  :cstate_c1e => cpu[:cstate_c1e],
 }
 
 #cpu[:extra2] = 'test2'
