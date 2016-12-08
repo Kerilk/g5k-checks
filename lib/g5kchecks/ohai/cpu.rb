@@ -42,8 +42,8 @@ else
   end
 end
 
-frequency_megahertz = execute("sudo dmidecode | grep \"Current Speed:\" | grep -oE \"[0-9]+\" | head -n 1").to_i
-cpu[:mhz] = frequency_megahertz * 1000000000
+# frequency_megahertz = execute("sudo dmidecode | grep \"Current Speed:\" | grep -oE \"[0-9]+\" | head -n 1").to_i
+# cpu[:mhz] = frequency_megahertz * 1000000000
 
 popen4("lscpu") do |pid, stdin, stdout, stderr|
   stdin.close
