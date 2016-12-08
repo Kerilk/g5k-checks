@@ -42,8 +42,7 @@ describe "Architecture" do
     plat_ohai.should eq(plat_api), "#{plat_ohai}, #{plat_api}, architecture, platform_type"
   end
 
-  # [:nb_procs, :nb_cores, :nb_threads].each { |key|
-  [:nb_procs, :nb_threads].each { |key|
+  [:nb_procs, :nb_cores, :nb_threads].each { |key|
 
     # /!\ Warning: As some names of CPUs properties have changed in the
     # grid'5000 api: the following block ensure compatibility between
