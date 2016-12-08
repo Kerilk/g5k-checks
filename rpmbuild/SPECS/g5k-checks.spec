@@ -14,6 +14,7 @@ Requires: ethtool
 Requires: fio
 Requires: hwloc
 Requires: ruby(release)
+Requires: x86info
 Requires: ruby(rubygems)
 Requires: rubygem(json)
 Requires: rubygem(ohai) => 6
