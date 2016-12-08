@@ -51,5 +51,10 @@ popd
 echo "RPM files should have been produced in $BUILD_FOLDER:"
 find $BUILD_FOLDER -name "*.rpm"
 
+RPM_CANDIDATE_FILE=$(find /home/cc/rpmbuild -name '*.rpm' | grep -v "SRPMS" | head -n 1)
+echo ""
+echo "To install the RPM, use the following command:"
+echo "  sudo yum localinstall $RPM_CANDIDATE_FILE"
+
 
 exit 0
