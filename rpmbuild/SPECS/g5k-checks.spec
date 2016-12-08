@@ -2,7 +2,7 @@
 %global gem_name g5k-checks
 
 Name: rubygem-%{gem_name}
-Version: 0.7.4
+Version: 0.7.5
 Release: 1%{?dist}
 Summary: Hardware verification tool for Grid'5000
 Group: Development/Languages
@@ -60,6 +60,8 @@ cp -a .%{_bindir}/* \
         %{buildroot}%{_bindir}/
 
 find %{buildroot}%{gem_instdir}/bin -type f | xargs chmod a+x
+mkdir -p $RPM_BUILD_ROOT/etc/
+install -p -D -m 644 conf/g5k-checks.conf $RPM_BUILD_ROOT/etc/
 
 # Run the test suite
 %check
@@ -74,6 +76,7 @@ popd
 %{gem_instdir}/conf
 %{gem_instdir}/scripts
 %{gem_libdir}
+%config /etc/g5k-checks.conf
 %doc %{gem_docdir}
 %doc %{gem_instdir}/LICENSE
 %doc %{gem_instdir}/VERSION
