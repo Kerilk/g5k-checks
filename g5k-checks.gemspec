@@ -14,7 +14,6 @@ Gem::Specification.new do |s|
   s.executables = ['g5k-checks']
   s.homepage    = 'https://github.com/grid5000/g5k-checks'
 
-  s.add_runtime_dependency('x86info')
   s.add_runtime_dependency('json')
   s.add_runtime_dependency('ohai', '~> 6') # ohai version 7 or greater is not yet compatible
   s.add_runtime_dependency('popen4')
