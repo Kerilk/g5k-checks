@@ -85,7 +85,6 @@ describe "Network" do
         end
         rate_ohai.should eql(rate_api), "#{rate_ohai}, #{rate_api}, network_adapters, #{dev[0]}, rate"
       end
-      #rate_ohai.should eql(rate_api), "#{rate_ohai}, #{rate_api}, network_adapters, #{dev[0]}, rate"
     end
 
     it "should have the correct version" do
