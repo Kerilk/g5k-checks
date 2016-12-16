@@ -13,7 +13,7 @@ end
 # Execute an external program
 def execute(cmd)
   stdout, stderr, status = Open3.capture3(cmd)
-
+  
   raise "#{cmd}: #{status.exitstatus}" unless status.success?
 
   stdout = stdout.split("\n")
@@ -78,6 +78,7 @@ popen4("lscpu") do |pid, stdin, stdout, stderr|
   end
 end
 
+# 
 cpu[:clock_speed] = (execute('x86info').last.split(" ").last.to_f * 1000 * 1000).to_i rescue 'unknown'
 
 # Parsing 'lscpu -p' output to retrieve :nb_procs, :nb_cores and :nb_threads
@@ -169,4 +170,39 @@ cpu['configuration'] = {
   :cstate_c1e => cpu[:cstate_c1e],
 }
 
-#cpu[:extra2] = 'test2'
+=begin
+  
+  # Attempt to force CPU to enter or leave idle state (it updates /sys/devices/system/cpu/cpu*/cpuidle/state*/)
+
+  # convert to array of int
+  a = execute("cat /sys/devices/system/cpu/cpu*/cpuidle/state*/usage").map!{|x| x.to_i}
+  execute("stress -t 1 -c #{cpu[:nb_threads]}") rescue nil
+  sleep 1
+  b = execute("cat /sys/devices/system/cpu/cpu*/cpuidle/state*/usage").map!{|x| x.to_i}
+  # b-a elements by elements and also group by cpu_id
+  diff = [b, a].transpose.map {|v| v.reduce(:-)}.each_slice(cstate_names.size).to_a
+  # sum states of all the cpus
+  diff = diff.transpose.map{|v| v.reduce(:+)}
+
+  # deeper cstate ?
+  cpu[:cstate_max_id] = diff.size - diff.reverse.index { |x| x != 0 } - 1
+end
+
+# bios configuration (using sysctl)
+
+syscfg_list = { 
+  :ht_enabled => 'LogicalProc',
+  :turboboost_enabled => 'ProcTurboMode',
+  :cstate_c1e => 'ProcC1E',
+  :cstate_enabled => 'ProcCStates',
+}
+
+execute('/opt/dell/toolkit/bin/syscfg -o /tmp/syscfg-bios.conf') rescue []
+syscfg = File.read('/tmp/syscfg-bios.conf') rescue ''
+
+cpu['configuration'] ||= {}
+syscfg_list.each {|k,v|
+  cpu['configuration'][k] = (syscfg.match(/^[;]?#{v}=(.*)/)[1] == 'enable' rescue nil)
+}
+
+=end

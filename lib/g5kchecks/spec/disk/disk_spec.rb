@@ -38,29 +38,28 @@ describe "Disk" do
 
       version_api = ""
       version_api = @api[k]['rev'] if (@api and @api[k] and @api[k]['rev'])
-      version_api = version_api.to_f if version_api.to_f != 0.0
-      version_ohai = version_ohai.to_f if version_ohai.to_f != 0.0
+      version_api = version_api.to_s
+      version_ohai = version_ohai.to_s
       version_ohai.should eql(version_api), "#{version_ohai}, #{version_api}, storage_devices, #{k}, rev"
     end
 
     it "should use the 'nvme' driver if applicable" do
       if k.include? "nvme"
         driver_api = @api[k]['driver'] if @api and @api[k] and @api[k]['driver']
-        # puts "driver_api: #{driver_api}"
         expected_driver = "nvme"
         expected_driver.should eql(driver_api), "#{expected_driver}, #{driver_api}, storage_devices, #{k}, nvme"
       end
+
+=begin
+    it "should have the correct vendor" do
+      vendor_ohai = v["vendor"]
+      vendor_ohai = v["vendor_from_lshw"] if v.key?("vendor_from_lshw") && v["vendor_from_lshw"] != nil
+
+      vendor_api = ""
+      vendor_api = @api[k]['vendor'] if (@api and @api[k] and @api[k]['rev'])
+      vendor_ohai.should eql(vendor_api), "#{vendor_ohai}, #{vendor_api}, storage_devices, #{k}, vendor"
     end
-
-    # it "should have the correct vendor" do
-    #   puts ("vendor #{v}")
-    #   vendor_ohai = v["vendor"]
-    #   vendor_ohai = v["vendor_from_lshw"] if v.key?("vendor_from_lshw") && v["vendor_from_lshw"] != nil
-
-    #   vendor_api = ""
-    #   vendor_api = @api[k]['vendor'] if (@api and @api[k] and @api[k]['rev'])
-    #   vendor_ohai.should eql(vendor_api), "#{vendor_ohai}, #{vendor_api}, storage_devices, #{k}, vendor"
-    # end
+=end
 
   }
 

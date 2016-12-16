@@ -60,14 +60,16 @@ describe "Architecture" do
 
       key_ohai.should eq(key_api), "#{key_ohai}, #{key_api}, architecture, #{old_api_key}"
     end
-
+    
     it "should have the correct value for #{key}" do
       key_ohai = @system[:cpu][key]
-      key_api = @api[old_api_key.to_s] if @api
-
+      
+      key_api = nil
+      key_api = @api[key.to_s] if @api
+      
       key_ohai.should eq(key_api), "#{key_ohai}, #{key_api}, architecture, #{key}"
     end
-
+    
   }
-
+  
 end

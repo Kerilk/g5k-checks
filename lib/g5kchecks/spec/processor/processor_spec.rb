@@ -13,7 +13,9 @@ describe "Processor" do
       freq_api = 0
     end
 
-    freq_ohai = @system[:cpu][:clock_speed] * 1000 # not accurate
+    # freq_ohai = @system[:cpu][:mhz] # not accurate
+
+    freq_ohai = @system[:cpu]['clock_speed'].to_i * 1000 # from x86info
 
     err = (freq_ohai-freq_api).abs
     err.should be < 100000000, "#{freq_ohai}, #{freq_api}, processor, clock_speed"
@@ -82,13 +84,17 @@ describe "Processor" do
     l3_ohai.to_i.should eql(l3_api), "#{l3_ohai}, #{l3_api}, processor, cache_l3"
   end
 
-  # [:ht_capable].each { |key|
-  #   it "should have the correct value for #{key}" do
-  #     key_ohai = @system[:cpu][key]
-  #     key_api = nil
-  #     key_api = @api[key.to_s] if @api
-  #     key_ohai.should eq(key_api), "#{key_ohai}, #{key_api}, processor, #{key}"
-  #   end
-  # }
-
+  [:ht_capable].each { |key|
+    
+    it "should have the correct value for #{key}" do
+      key_ohai = @system[:cpu][key]
+      
+      key_api = nil
+      key_api = @api[key.to_s] if @api
+      
+      key_ohai.should eq(key_api), "#{key_ohai}, #{key_api}, processor, #{key}"
+    end
+    
+  }
+  
 end
