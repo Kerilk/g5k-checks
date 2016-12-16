@@ -135,6 +135,8 @@ end
 cpu[:cstate_driver]   = fileread('/sys/devices/system/cpu/cpuidle/current_driver') rescue 'none'
 cpu[:cstate_governor] = fileread('/sys/devices/system/cpu/cpuidle/current_governor_ro') rescue 'none'
 
+# I took inspiration from this document which describes how DELL's syscfg is working:
+# http://topics-cdn.dell.com/pdf/dell-opnmang-dplymnt-toolkit-v5.0.1_Reference%20Guide_en-us.pdf
 if cpu[:cstate_driver] != 'none'
   cstate_names = execute('cat /sys/devices/system/cpu/cpu0/cpuidle/state*/name') rescue nil
   cstate_ids = cstate_names.select &lambda {|k| k.include?("-HSW")}
@@ -145,8 +147,6 @@ if cpu[:cstate_driver] != 'none'
   cpu[:cstate_c1e] = cstate_ids_as_int.include?(1)
 end
 
-# I took inspiration from this document which describes how DELL's syscfg is working:
-# http://topics-cdn.dell.com/pdf/dell-opnmang-dplymnt-toolkit-v5.0.1_Reference%20Guide_en-us.pdf
 cpu['configuration'] = {
   :ht_enabled => cpu[:ht_enabled],
   :turboboost_enabled => cpu[:turboboost_enabled],
