@@ -145,22 +145,6 @@ if cpu[:cstate_driver] != 'none'
   cpu[:cstate_c1e] = cstate_ids_as_int.include?(1)
 end
 
-# # bios configuration (using syscfg)
-# syscfg_list = {
-#   :ht_enabled => 'LogicalProc',
-#   :turboboost_enabled => 'ProcTurboMode',
-#   :cstate_c1e => 'ProcC1E',
-#   :cstate_enabled => 'ProcCStates',
-# }
-
-# execute('/opt/dell/toolkit/bin/syscfg -o /tmp/syscfg-bios.conf') rescue []
-# syscfg = File.read('/tmp/syscfg-bios.conf') rescue ''
-
-# cpu['configuration'] ||= {}
-# syscfg_list.each {|k,v|
-#   cpu['configuration'][k] = (syscfg.match(/^[;]?#{v}=(.*)/)[1] == 'enable' rescue nil)
-# }
-
 # I took inspiration from this document which describes how DELL's syscfg is working:
 # http://topics-cdn.dell.com/pdf/dell-opnmang-dplymnt-toolkit-v5.0.1_Reference%20Guide_en-us.pdf
 cpu['configuration'] = {
