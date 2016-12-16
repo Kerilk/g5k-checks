@@ -49,6 +49,7 @@ describe "Disk" do
         expected_driver = "nvme"
         expected_driver.should eql(driver_api), "#{expected_driver}, #{driver_api}, storage_devices, #{k}, nvme"
       end
+    end
 
 =begin
     it "should have the correct vendor" do
