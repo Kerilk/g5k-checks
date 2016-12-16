@@ -83,7 +83,7 @@ describe "Network" do
         else
           rate_ohai = dev[1][:rate].to_i
         end
-        rate_ohai.should eql(rate_api), "#{rate_ohai}, #{rate_api}, network_interfaces, #{dev[0]}, rate"
+        rate_ohai.should eql(rate_api), "#{rate_ohai}, #{rate_api}, network_adapters, #{dev[0]}, rate"
       end
       #rate_ohai.should eql(rate_api), "#{rate_ohai}, #{rate_api}, network_adapters, #{dev[0]}, rate"
     end
