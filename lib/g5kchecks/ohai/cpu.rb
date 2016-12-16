@@ -171,7 +171,6 @@ cpu['configuration'] = {
 }
 
 =begin
-  
   # Attempt to force CPU to enter or leave idle state (it updates /sys/devices/system/cpu/cpu*/cpuidle/state*/)
 
   # convert to array of int
@@ -204,5 +203,4 @@ cpu['configuration'] ||= {}
 syscfg_list.each {|k,v|
   cpu['configuration'][k] = (syscfg.match(/^[;]?#{v}=(.*)/)[1] == 'enable' rescue nil)
 }
-
 =end
