@@ -2,7 +2,7 @@
 %global gem_name g5k-checks
 
 Name: rubygem-%{gem_name}
-Version: 0.7.5
+Version: 0.7.4
 Release: 1%{?dist}
 Summary: Hardware verification tool for Grid'5000
 Group: Development/Languages
