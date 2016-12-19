@@ -12,17 +12,20 @@ Source0: %{gem_name}-%{version}.gem
 Requires: bridge-utils
 Requires: ethtool
 Requires: fio
+Requires: hdparm
 Requires: hwloc
+Requires: lshw
 Requires: ruby(release)
-Requires: x86info
 Requires: ruby(rubygems)
 Requires: rubygem(json)
-Requires: rubygem(ohai) => 6
 Requires: rubygem(ohai) < 7
+Requires: rubygem(ohai) => 6
 Requires: rubygem(popen4)
 Requires: rubygem(rest-client)
-Requires: rubygem(rspec) => 2
 Requires: rubygem(rspec) < 3
+Requires: rubygem(rspec) => 2
+Requires: util-linux
+Requires: x86info
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
 BuildRequires: ruby
