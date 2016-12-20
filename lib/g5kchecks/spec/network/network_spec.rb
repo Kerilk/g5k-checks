@@ -12,6 +12,16 @@ describe "Network" do
 
   RSpec.configuration.node.ohai_description[:network][:interfaces].to_hash.select { |d,i| %w{ eno eth ib myri }.include?(i[:type]) }.each do |dev|
 
+    # WARNING: Infiniband cards are not yet supported by cc-checks: we are
+    # skipping the tests until their support is added. We make the assumption
+    # that infinibands interfaces follows the "ib" pattern
+    if dev[0][/^ib/]
+      puts "/!\\ The #{dev[0]} interface has not been checked: Infiniband cards are not yet fully supported by cc-checks"
+      is_infiniband = true
+    else
+      is_infiniband = false
+    end
+
     it "should be the correct interface name" do
       name_api = ""
       name_api = @api[dev[0]]['interface'] if @api_desc
@@ -19,6 +29,7 @@ describe "Network" do
       name_ohai.should eql(name_api), "#{name_ohai}, #{name_api}, network_adapters, #{dev[0]}, interface"
     end
 
+=begin
     it "should have the correct IPv4" do
       ip_api = ""
       ip_api = @api[dev[0]]['ip'] if @api_desc
@@ -32,8 +43,14 @@ describe "Network" do
       ip_ohai = dev[1][:ip6]
       ip_ohai.should eql(ip_api), "#{ip_ohai}, #{ip_api}, network_adapters, #{dev[0]}, ip6"
     end
+=end
 
     it "should have the correct Driver" do
+      # Warning: Infiniband interfaces don't support this value yet: this test
+      # must be skipped
+      if is_infiniband
+        next
+      end
       driver_api = ""
       driver_api = @api[dev[0]]['driver'] if @api_desc
       driver_ohai = dev[1][:driver]
@@ -57,23 +74,32 @@ describe "Network" do
     end
 
     it "should have the correct Rate" do
-      rate_api = ""
-      rate_api = @api[dev[0]]['rate'] if @api_desc
-      if dev[1][:rate] == ""
-        rate_ohai = dev[1][:rate]
-      else
-        rate_ohai = dev[1][:rate].to_i
+      mnt_api = @api[dev[0]]['mounted'] if @api_desc
+      if mnt_api
+        rate_api = ""
+        rate_api = @api[dev[0]]['rate'] if @api_desc
+        if dev[1][:rate] == ""
+          rate_ohai = dev[1][:rate]
+        else
+          rate_ohai = dev[1][:rate].to_i
+        end
+        rate_ohai.should eql(rate_api), "#{rate_ohai}, #{rate_api}, network_adapters, #{dev[0]}, rate"
       end
-      rate_ohai.should eql(rate_api), "#{rate_ohai}, #{rate_api}, network_adapters, #{dev[0]}, rate"
     end
 
     it "should have the correct version" do
+      # Warning: Infiniband interfaces don't support this value yet: this test
+      # must be skipped
+      if is_infiniband
+        next
+      end
       ver_api = ""
       ver_api = @api[dev[0]]['version'] if @api_desc
       ver_ohai = dev[1][:version]
       ver_ohai.should eql(ver_api), "#{ver_ohai}, #{ver_api}, network_adapters, #{dev[0]}, version"
     end
 
+=begin
     it "should have the correct vendor" do
       ven_api = ""
       ven_api = @api[dev[0]]['vendor'] if @api_desc
@@ -94,8 +120,14 @@ describe "Network" do
       ven_ohai = dev[1][:mountable]
       ven_ohai.should eql(ven_api), "#{ven_ohai}, #{ven_api}, network_adapters, #{dev[0]}, mountable"
     end
+=end
 
     it "should have the correct mounted mode" do
+      # Warning: Infiniband interfaces don't support this value yet: this test
+      # must be skipped
+      if is_infiniband
+        next
+      end
       ven_api = nil
       ven_api = @api[dev[0]]['mounted'] if @api_desc
       ven_ohai = dev[1][:mounted]
