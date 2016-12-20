@@ -39,7 +39,14 @@ module RSpec
 
         def example_failed(example)
           super(example)
-          puts failure_output(example, example.execution_result[:exception])
+          if example.execution_result.respond_to?(:exception)
+            # RSpec 3
+            exception = example.execution_result.exception
+          else
+            # RSpec 2
+            exception = example.execution_result[:exception]
+          end
+          puts failure_output(example, exception)
         end
 
         def failure_output(example, exception)

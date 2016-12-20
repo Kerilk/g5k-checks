@@ -1,6 +1,11 @@
 #!/usr/bin/ruby
 
 require 'rspec'
+begin
+  require 'rspec/legacy_formatters'
+rescue LoadError
+  # not installed
+end
 
 require 'g5kchecks/utils/node'
 require 'g5kchecks/utils/utils'
@@ -81,6 +86,7 @@ module G5kChecks
         config.node = Grid5000::Node.new(conf)
         config.add_setting :output_dir
         config.output_dir = conf["output_dir"]
+        config.expect_with(:rspec) { |c| c.syntax = :should }
       end
 
       RSpec::Core::Runner::run(rspec_opts)
