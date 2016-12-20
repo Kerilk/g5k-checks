@@ -11,13 +11,15 @@ sudo yum install -y rubygems-devel
 ############################################################
 # Preparing tmp folder and its subfolders
 ############################################################
-USE_HOME_FOLDER="yes"
+USE_HOME_FOLDER=${USE_HOME_FOLDER:-yes}
 if [ "$USE_HOME_FOLDER" != "yes" ]; then
     TMP_FOLDER=$(mktemp -d)
     BUILD_FOLDER=$TMP_FOLDER/rpmbuild
 else
-    BUILD_FOLDER="/home/cc/rpmbuild"
+    BUILD_FOLDER="$HOME/rpmbuild"
 fi
+
+echo "%_topdir $BUILD_FOLDER" > ~/.rpmmacros
 
 rm -rf $BUILD_FOLDER
 mkdir -p $BUILD_FOLDER/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
@@ -28,7 +30,7 @@ mkdir -p $BUILD_FOLDER/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 ############################################################
 # Generate a new gems file
 GEM_BUILD_OUTPUT=$(gem build g5k-checks.gemspec)
-GEM_FILE_NAME=$(echo $GEM_BUILD_OUTPUT | grep -o -E "[a-z.A-Z0-9-]+\.gem")
+GEM_FILE_NAME=$(echo $GEM_BUILD_OUTPUT | grep -o -E '[a-z.A-Z0-9-]+\.gem')
 echo $GEM_FILE_NAME
 cp $GEM_FILE_NAME $BUILD_FOLDER/SOURCES/.
 
@@ -50,7 +52,7 @@ popd
 echo "RPM files should have been produced in $BUILD_FOLDER:"
 find $BUILD_FOLDER -name "*.rpm"
 
-RPM_CANDIDATE_FILE=$(find /home/cc/rpmbuild -name '*.rpm' | grep -v "SRPMS" | head -n 1)
+RPM_CANDIDATE_FILE=$(find $BUILD_FOLDER -name '*.rpm' | grep -v 'SRPMS' | head -n 1)
 echo ""
 echo "To install the RPM, use the following command:"
 echo "sudo yum localinstall -y $RPM_CANDIDATE_FILE"
