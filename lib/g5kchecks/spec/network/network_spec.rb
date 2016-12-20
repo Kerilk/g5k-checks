@@ -12,6 +12,11 @@ describe "Network" do
 
   RSpec.configuration.node.ohai_description[:network][:interfaces].to_hash.select { |d,i| %w{ eno eth ib myri }.include?(i[:type]) }.each do |dev|
 
+    # Workaround to match interfaces detected by Ubuntu as e.g. eth0 to those detected on CentOS as e.g. eno1
+    if dev[0][/^eth([0-9]+)/]
+      dev[0] = "eno#{$1.to_i + 1}"
+    end
+
     # WARNING: Infiniband cards are not yet supported by cc-checks: we are
     # skipping the tests until their support is added. We make the assumption
     # that infinibands interfaces follows the "ib" pattern
