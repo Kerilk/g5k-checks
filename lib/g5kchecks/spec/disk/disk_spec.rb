@@ -51,6 +51,7 @@ describe "Disk" do
       end
     end
 
+=begin
     it "should have the correct vendor" do
       vendor_ohai = v["vendor"]
       vendor_ohai = v["vendor_from_lshw"] if v.key?("vendor_from_lshw") && v["vendor_from_lshw"] != nil
@@ -59,6 +60,7 @@ describe "Disk" do
       vendor_api = @api[k]['vendor'] if (@api and @api[k] and @api[k]['rev'])
       vendor_ohai.should eql(vendor_api), "#{vendor_ohai}, #{vendor_api}, storage_devices, #{k}, vendor"
     end
+=end
 
   }
 
