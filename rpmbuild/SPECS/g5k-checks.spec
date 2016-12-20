@@ -10,6 +10,7 @@ License: CECILL-B
 URL: https://github.com/grid5000/g5k-checks
 Source0: %{gem_name}-%{version}.gem
 Requires: bridge-utils
+Requires: dmidecode
 Requires: ethtool
 Requires: fio
 Requires: hdparm
@@ -88,7 +89,7 @@ popd
 %{gem_spec}
 
 %changelog
-* Fri Nov 04 2016 Jonathan Pastor <jpastor@uchicago.edu> - 0.7.4
-- Merge with g5k upstream
+* Tue Dec 20 2016 Jonathan Pastor <jpastor@uchicago.edu> - 0.7.4
+- Synchronize with upstream Grid'5000 code
 * Wed Mar 16 2016 Pierre Riteau <priteau@uchicago.edu> - 0.5.1-1
 - Initial package
