@@ -135,9 +135,26 @@ end
 cpu[:cstate_driver]   = fileread('/sys/devices/system/cpu/cpuidle/current_driver') rescue 'none'
 cpu[:cstate_governor] = fileread('/sys/devices/system/cpu/cpuidle/current_governor_ro') rescue 'none'
 
+# I took inspiration from this document which describes how DELL's syscfg is working:
+# http://topics-cdn.dell.com/pdf/dell-opnmang-dplymnt-toolkit-v5.0.1_Reference%20Guide_en-us.pdf
 if cpu[:cstate_driver] != 'none'
   cstate_names = execute('cat /sys/devices/system/cpu/cpu0/cpuidle/state*/name') rescue nil
-  
+  cstate_ids = cstate_names.select &lambda {|k| k.include?("-HSW")}
+  cstate_ids_as_int = cstate_ids.map &lambda {|k| k.scan(/[0-9]+/)[0].to_i}
+
+  cpu[:cstate_max_id] = cstate_ids_as_int.max
+  cpu[:cstate_enabled] = true
+  cpu[:cstate_c1e] = cstate_ids_as_int.include?(1)
+end
+
+cpu['configuration'] = {
+  :ht_enabled => cpu[:ht_enabled],
+  :turboboost_enabled => cpu[:turboboost_enabled],
+  :cstate_enabled => cpu[:cstate_enabled],
+  :cstate_c1e => cpu[:cstate_c1e],
+}
+
+=begin
   # Attempt to force CPU to enter or leave idle state (it updates /sys/devices/system/cpu/cpu*/cpuidle/state*/)
 
   # convert to array of int
@@ -170,4 +187,4 @@ cpu['configuration'] ||= {}
 syscfg_list.each {|k,v|
   cpu['configuration'][k] = (syscfg.match(/^[;]?#{v}=(.*)/)[1] == 'enable' rescue nil)
 }
-
+=end
