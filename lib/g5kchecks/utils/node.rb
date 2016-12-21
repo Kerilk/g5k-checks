@@ -7,6 +7,26 @@ require 'yaml'
 require 'ohai'
 Ohai::Config[:plugin_path] << File.expand_path(File.join(File.dirname(__FILE__), '/../ohai'))
 
+# Backported from Ohai 6 to support direct access to attributes without using the data dictionary
+module Ohai
+  class System
+    def get_attribute(name)
+      @data[name]
+    end
+
+    def set_attribute(name, *values)
+      @data[name] = Array18(*values)
+      @data[name]
+    end
+
+    def method_missing(name, *args)
+      return get_attribute(name) if args.length == 0
+
+      set_attribute(name, *args)
+    end
+  end
+end
+
 module Grid5000
   class Node
     attr_reader :hostname
