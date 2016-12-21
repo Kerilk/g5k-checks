@@ -92,6 +92,8 @@ describe "Network" do
       end
     end
 
+=begin
+    # Disabled version check which appears to be unsupported on Ethernet
     it "should have the correct version" do
       # Warning: Infiniband interfaces don't support this value yet: this test
       # must be skipped
@@ -103,6 +105,7 @@ describe "Network" do
       ver_ohai = dev[1][:version]
       ver_ohai.should eql(ver_api), "#{ver_ohai}, #{ver_api}, network_adapters, #{dev[0]}, version"
     end
+=end
 
 =begin
     it "should have the correct vendor" do
