@@ -3,7 +3,7 @@
 
 Name: rubygem-%{gem_name}
 Version: 0.5.1
-Release: 1%{?dist}
+Release: 3%{?dist}
 Summary: Hardware verification tool for Grid'5000
 Group: Development/Languages
 License: CECILL-B
@@ -81,5 +81,9 @@ popd
 %{gem_spec}
 
 %changelog
+* Fri Dec 23 2016 Pierre Riteau <priteau@uchicago.edu> - 0.5.1-3
+- Add support for Atom CPUs
+* Fri Jul 8 2016 Jonathan Pastor <jpastor@uchicago.edu> - 0.5.1-2
+- Add support for NVIDIA GPUs
 * Wed Mar 16 2016 Pierre Riteau <priteau@uchicago.edu> - 0.5.1-1
 - Initial package
