@@ -3,9 +3,11 @@ describe "Processor" do
   before(:all) do
     @api = RSpec.configuration.node.api_description["processor"]
     @system = RSpec.configuration.node.ohai_description
+    @instruction_set = @system[:kernel][:machine].sub('_','-')
   end
 
   it "should have the correct frequency" do
+    pending "This check is not supported on ARM64" if @instruction_set == 'aarch64'
     freq_api = ""
     if @api
       freq_api = @api["clock_speed"]
@@ -26,6 +28,7 @@ describe "Processor" do
   end
 
   it "should be of the correct model" do
+    pending "This check is not supported on ARM64" if @instruction_set == 'aarch64'
     desc_api = ""
     desc_api = @api["model"] if @api
     desc_ohai = @system[:cpu][:model]
@@ -33,6 +36,7 @@ describe "Processor" do
   end
 
   it "should be of the correct version" do
+    pending "This check is not supported on ARM64" if @instruction_set == 'aarch64'
     version_api = ""
     version_api = @api["version"].to_s if @api
     version_ohai = @system[:cpu][:version]
@@ -40,6 +44,7 @@ describe "Processor" do
   end
 
   it "should have the correct vendor" do
+    pending "This check is not supported on ARM64" if @instruction_set == 'aarch64'
     vendor_api = ""
     vendor_api = @api["vendor"] if @api
     vendor_ohai = @system[:cpu][:vendor]
@@ -47,6 +52,7 @@ describe "Processor" do
   end
 
   it "should have the correct description" do
+    pending "This check is not supported on ARM64" if @instruction_set == 'aarch64'
     desc_api = ""
     desc_api = @api["other_description"] if @api
     desc_ohai = @system[:cpu][:'0'][:model_name]
@@ -54,6 +60,7 @@ describe "Processor" do
   end
 
   it "should have the correct L1i" do
+    pending "This check is not supported on ARM64" if @instruction_set == 'aarch64'
     l1i_api = ""
     l1i_api = @api["cache_l1i"] if @api
     l1i_ohai = @system[:cpu][:L1i].to_i*1024
@@ -61,6 +68,7 @@ describe "Processor" do
   end
 
   it "should have the correct L1d" do
+    pending "This check is not supported on ARM64" if @instruction_set == 'aarch64'
     l1d_api = ""
     l1d_api = @api["cache_l1d"] if @api
     l1d_ohai = @system[:cpu][:L1d].to_i*1024
@@ -68,6 +76,7 @@ describe "Processor" do
   end
 
   it "should have the correct L2" do
+    pending "This check is not supported on ARM64" if @instruction_set == 'aarch64'
     l2_api = ""
     l2_api = @api["cache_l2"] if @api
     l2_ohai = @system[:cpu][:L2].to_i*1024
@@ -75,6 +84,7 @@ describe "Processor" do
   end
 
   it "should have the correct L3" do
+    pending "This check is not supported on ARM64" if @instruction_set == 'aarch64'
     l3_api = ""
     l3_api = @api["cache_l3"] if @api
     l3_ohai = @system[:cpu][:L3].to_i*1024

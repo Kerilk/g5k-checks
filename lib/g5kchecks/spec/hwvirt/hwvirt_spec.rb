@@ -3,9 +3,12 @@ describe "Virtual Hardware" do
   before do
     @api = RSpec.configuration.node.api_description['supported_job_types']
     @system = RSpec.configuration.node.ohai_description
+    @instruction_set = @system[:kernel][:machine].sub('_','-')
   end
 
   it "should have the good driver" do
+    pending "This check is not supported on ARM64" if @instruction_set == 'aarch64'
+
     vhw_type = @system[:cpu][:'0'][:flags].select{|i|
       i == "svm" || i == "vmx"
     }
