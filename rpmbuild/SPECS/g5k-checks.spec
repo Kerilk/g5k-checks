@@ -18,7 +18,7 @@ Requires: ruby(rubygems)
 Requires: rubygem(json)
 Requires: rubygem(ohai) => 6
 Requires: rubygem(ohai) < 7
-Requires: rubygem(popen4)
+Requires: rubygem(systemu)
 Requires: rubygem(rest-client)
 Requires: rubygem(rspec) => 2
 Requires: rubygem(rspec) < 3

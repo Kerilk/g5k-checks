@@ -1,5 +1,5 @@
 # provide some useful functions
-require 'popen4'
+require 'systemu'
 
 class String
   def force_encoding(enc)
@@ -124,25 +124,21 @@ module Utils
 
   def Utils.mount_grep(grep)
     mount = Hash.new
-    POpen4::popen4("mount | grep '#{grep}'") do |stdout, stderr, stdin, pid|
-      stdin.close
-      stdout.each do |line|
-	parsed_line = Utils.parse_line_mount(line)
-	mount.merge!(parsed_line) if parsed_line != nil
-      end
-   end
+    status, stdout, stderr = systemu %q("mount | grep '#{grep}'")
+    stdout.each_line do |line|
+      parsed_line = Utils.parse_line_mount(line)
+      mount.merge!(parsed_line) if parsed_line != nil
+    end
     mount
   end
 
   def Utils.mount
     mount = Hash.new
-    POpen4::popen4("mount") do |stdout, stderr, stdin, pid|
-      stdin.close
-      stdout.each do |line|
-	parsed_line = Utils.parse_line_mount(line)
-	mount.merge!(parsed_line) if parsed_line != nil
-      end
-   end
+    status, stdout, stderr = systemu %q("mount")
+    stdout.each_line do |line|
+      parsed_line = Utils.parse_line_mount(line)
+      mount.merge!(parsed_line) if parsed_line != nil
+    end
     mount
   end
 
@@ -161,8 +157,9 @@ module Utils
 
   def Utils.hwloc_parse_mem
     mem_units = ["B", "KB", "MB", "GB", "TB"]
-    POpen4::popen4("hwloc-ls") do |stdout, stderr, stdin, pid|
-      re = stdout.first.match(/^Machine \((?<memsize>[[:digit:]]+)(?<memunit>[A-Z]+).*\)$/)
+    status, stdout, stderr = systemu %q("hwloc-ls")
+    if status.exitstatus == 0
+      re = stdout.lines.first.match(/^Machine \((?<memsize>[[:digit:]]+)(?<memunit>[A-Z]+).*\)$/)
       if not re or not re[:memsize] or not mem_units.include?(re[:memunit])
         raise "Error while parsing hwloc-ls output: #{re}"
       end

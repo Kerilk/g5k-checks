@@ -10,7 +10,7 @@
 - ruby-rest-client
 - ruby-json
 - ohai
-- ruby-popen4
+- ruby-systemu
 - fio
 
 ## Build as a debian package
@@ -25,7 +25,7 @@
 # git clone https://github.com/ChameleonCloud/g5k-checks.git
 git clone https://github.com/badock/g5k-checks.git
 
-sudo apt-get install -y rake ruby-rspec ntp nfs-common ruby-rest-client ruby-json ohai ruby-popen4 fio
+sudo apt-get install -y rake ruby-rspec ntp nfs-common ruby-rest-client ruby-json ohai ruby-systemu fio
 sudo apt-get -f install
 ```
 
