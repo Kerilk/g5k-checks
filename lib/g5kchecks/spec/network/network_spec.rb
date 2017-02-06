@@ -10,7 +10,7 @@ describe "Network" do
     end
   end
 
-  RSpec.configuration.node.ohai_description[:network][:interfaces].to_hash.select { |d,i| %w{ eno eth ib myri }.include?(i[:type]) }.each do |dev|
+  RSpec.configuration.node.ohai_description[:network][:interfaces].to_hash.select { |d,i| /(en|eth|ib|myri).*/.match(d) }.each do |dev|
 
     # WARNING: Infiniband cards are not yet supported by cc-checks: we are
     # skipping the tests until their support is added. We make the assumption
