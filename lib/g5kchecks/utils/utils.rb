@@ -31,7 +31,7 @@ module Utils
   def Utils.interface_name(int)
     # Ref API: interface
     case int
-    when "eno","eth" then return 'Ethernet'
+    when "en","eth"  then return 'Ethernet'
     when "br"        then return 'Bridge'
     when "ib"        then return 'InfiniBand'
     when "myri"      then return 'Myrinet'

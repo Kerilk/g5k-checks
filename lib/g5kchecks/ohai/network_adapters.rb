@@ -8,8 +8,8 @@ Ohai.plugin(:NetworkNetworkAdaptersImproved) do
   collect_data(:linux) do
     interfaces = network[:interfaces]
     
-    # Process only eno, eth, and myri interfaces first
-    interfaces.select { |d,i| %w{ eno eth myri }.include?(i[:type]) }.each do |dev,iface|
+    # Process only en, eth, and myri interfaces first
+    interfaces.select { |d,i| /(en|eth|myri).*/.match(d) }.each do |dev,iface|
       # It is likely that an interface is not the management interface if it is
       # accessible from the OS.
       iface[:management] = false
