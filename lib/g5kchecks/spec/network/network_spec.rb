@@ -37,7 +37,8 @@ describe "Network" do
       name_api = ""
       corrected_dev_0 = correct_nic_name_second(dev[0])
       name_api = @api[corrected_dev_0]['interface'] if @api_desc
-      name_ohai = Utils.interface_name(dev[1][:type])
+      type = /(en|eth|ib|myri).*/.match(dev[0])[1]
+      name_ohai = Utils.interface_name(type)
       name_ohai.should eql(name_api), "#{name_ohai}, #{name_api}, network_interfaces, #{dev[0]}, interface"
     end
 
