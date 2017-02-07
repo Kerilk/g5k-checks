@@ -1,16 +1,10 @@
-def correct_nic_name_second(nic_name, expected_pattern="eth")
+def correct_nic_name_second(nic_name, index, xexpected_pattern="eth")
   is_ubuntu = RSpec.configuration.node.ohai_description[:platform] == "ubuntu"
   if is_ubuntu
-    # The Chameleon API provides network interface in the "enoX" format, while
-    # Ubuntu is setting the network interface to the "ethY" format. This 
-    # function transform "enoX" nic name in "ethY". Please note that Y = X-1.
-    if nic_name.include? "eno"
-      nic_number_str = nic_name.sub("eno", "").to_i
-      nic_number_int = nic_number_str.to_i
-      nic_number_int = nic_number_int - 1
-      new_nic_name = expected_pattern + nic_number_int.to_s
-      return new_nic_name
-    end
+    # The Chameleon API provides network interface in the "en*" format, while
+    # Ubuntu is setting the network interface to the "eth*" format. This
+    # function transforms "en*" nic name in "eth*" using the index in the API.
+    return "eth#{index}"
   end
   return nic_name
 end
@@ -21,10 +15,10 @@ describe "Network" do
     @api_desc = RSpec.configuration.node.api_description["network_adapters"]
     @api = {}
     if @api_desc
-      @api_desc.each { |a|
+      @api_desc.each_with_index { |a,i|
         # Check any incompatibility between Ubuntu network interfaces names and
         # centos network interfaces names.
-        new_nic_name =  correct_nic_name_second(a["device"])
+        new_nic_name =  correct_nic_name_second(a["device"], i)
         a['device'] = new_nic_name
         @api[a['device']] = a
       }
