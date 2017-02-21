@@ -45,4 +45,18 @@ else
   }
 end
 
+devicequery_path = '/usr/local/cuda/samples/bin/x86_64/linux/release/deviceQuery'
+if Pathname.new(devicequery_path).executable?
+  nvidia_output = `#{devicequery_path}`
+  if nvidia_output != ''
+    nvidia_lines = nvidia_output.split("\n")
+    nvidia_lines.each do |line|
+      if line =~ /^Device [0-9]: "Tesla ([A-Za-z0-9]+)-PCIE-[0-9]+GB/
+        gpu_model = $1
+      end
+    end
+    gpu_info[:gpu_model] = gpu_model
+  end
+end
+
 gpu gpu_info
