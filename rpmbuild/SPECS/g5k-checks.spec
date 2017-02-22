@@ -3,7 +3,7 @@
 
 Name: rubygem-%{gem_name}
 Version: 0.5.1
-Release: 4%{?dist}
+Release: 5%{?dist}
 Summary: Hardware verification tool for Grid'5000
 Group: Development/Languages
 License: CECILL-B
@@ -81,6 +81,8 @@ popd
 %{gem_spec}
 
 %changelog
+* Tue Feb 21 2017 Pierre Riteau <priteau@uchicago.edu> - 0.5.1-5
+- Fix device type detection
 * Tue Feb 21 2017 Pierre Riteau <priteau@uchicago.edu> - 0.5.1-4
 - Add support for detecting NVIDIA Tesla P100
 * Fri Dec 23 2016 Pierre Riteau <priteau@uchicago.edu> - 0.5.1-3
