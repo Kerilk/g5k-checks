@@ -11,6 +11,7 @@ describe "Network" do
   end
 
   RSpec.configuration.node.ohai_description[:network][:interfaces].to_hash.select { |d,i| /(en|eth|ib|myri).*/.match(d) }.each do |dev|
+    device_type = /(en|eth|ib|myri).*/.match(dev[0])[1]
 
     # WARNING: Infiniband cards are not yet supported by cc-checks: we are
     # skipping the tests until their support is added. We make the assumption
@@ -25,7 +26,7 @@ describe "Network" do
     it "should be the correct interface name" do
       name_api = ""
       name_api = @api[dev[0]]['interface'] if @api_desc
-      name_ohai = Utils.interface_name(dev[1][:type])
+      name_ohai = Utils.interface_name(device_type)
       name_ohai.should eql(name_api), "#{name_ohai}, #{name_api}, network_interfaces, #{dev[0]}, interface"
     end
 
